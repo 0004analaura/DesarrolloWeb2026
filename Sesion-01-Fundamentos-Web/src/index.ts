@@ -74,21 +74,29 @@ export function parseUrl(url: string): UrlParts {
 }
 
 /**
- * TODO: Clasifica un código de estado HTTP en su categoría.
- *
- * Reglas:
- *   100–199 → "1xx Informativo"
- *   200–299 → "2xx Éxito"
- *   300–399 → "3xx Redirección"
- *   400–499 → "4xx Error del cliente"
- *   500–599 → "5xx Error del servidor"
- *   otro    → "Desconocido"
- *
- * Pista: un único `if / else if` con comparaciones de rangos basta.
+ * Clasifica un código de estado HTTP en su categoría.
+ * @param code - El código de estado HTTP a clasificar.
+ * @returns La categoría correspondiente al código.
  */
 export function classifyStatus(code: number): StatusCategory {
-  // TODO: tu implementación aquí
-  throw new Error("Not implemented");
+  const codigo = code;
+  let categoria: StatusCategory;
+
+  if (codigo >= 100 && codigo <= 199) {
+    categoria = "1xx Informativo";
+  } else if (codigo >= 200 && codigo <= 299) {
+    categoria = "2xx Éxito";
+  } else if (codigo >= 300 && codigo <= 399) {
+    categoria = "3xx Redirección";
+  } else if (codigo >= 400 && codigo <= 499) {
+    categoria = "4xx Error del cliente";
+  } else if (codigo >= 500 && codigo <= 599) {
+    categoria = "5xx Error del servidor";
+  } else {
+    categoria = "Desconocido";
+  }
+
+  return categoria;
 }
 
 /**
