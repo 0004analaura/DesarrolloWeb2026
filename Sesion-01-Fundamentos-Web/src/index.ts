@@ -41,13 +41,11 @@ export type StatusCategory =
 export type Headers = Record<string, string>;
 
 // ---------------------------------------------------------------------------
-// Funciones a implementar
+// Funciones
 // ---------------------------------------------------------------------------
 
 /**
- * Analiza una URL y devuelve sus partes principales.
- * @param url - La URL a analizar.
- * @returns Un objeto con protocolo, host, pathname, search y query.
+ * Analiza una URL y devuelve sus partes.
  */
 export function parseUrl(url: string): UrlParts {
   const urlAnalizada = new URL(url);
@@ -74,9 +72,7 @@ export function parseUrl(url: string): UrlParts {
 }
 
 /**
- * Clasifica un código de estado HTTP en su categoría.
- * @param code - El código de estado HTTP a clasificar.
- * @returns La categoría correspondiente al código.
+ * Clasifica un código HTTP.
  */
 export function classifyStatus(code: number): StatusCategory {
   const codigo = code;
@@ -100,9 +96,7 @@ export function classifyStatus(code: number): StatusCategory {
 }
 
 /**
- * Convierte un texto de cabeceras HTTP en un objeto.
- * @param text - Texto con líneas en formato "Nombre: valor".
- * @returns Un objeto con las cabeceras encontradas.
+ * Convierte cabeceras en un objeto.
  */
 export function parseHeaders(text: string): Headers {
   const texto = text;
@@ -129,11 +123,7 @@ export function parseHeaders(text: string): Headers {
 }
 
 /**
- * Genera un resumen legible de una petición HTTP.
- * @param url - La URL de la petición.
- * @param status - El código de estado HTTP.
- * @param headersText - El texto con las cabeceras.
- * @returns Un resumen en formato de texto.
+ * Genera un resumen de una solicitud HTTP.
  */
 export function summarizeRequest(
   url: string,
