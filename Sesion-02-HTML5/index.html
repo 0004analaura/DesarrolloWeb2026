@@ -26,6 +26,36 @@
         <p>Puedes conocer mas en
           <a href="https://www.ign.com" target="_blank" rel="noopener">IGN</a>.
         </p>
+
+        <dialog id="bienvenida">
+          <h3>Bienvenido a Mundo Gamer</h3>
+          <p>Gracias por visitar el sitio. Explora generos, consolas y recomendaciones.</p>
+          <form method="dialog">
+            <button>Cerrar</button>
+          </form>
+        </dialog>
+        <button type="button" command="show-modal" commandfor="bienvenida">
+          Abrir mensaje
+        </button>
+
+        <button type="button" popovertarget="ayuda">Ayuda</button>
+        <div id="ayuda" popover>
+          <p>Usa el menu superior para navegar entre las paginas del sitio.</p>
+        </div>
+      </article>
+
+      <article>
+        <h3>Contacto</h3>
+        <p>Dejanos tus datos si quieres recibir recomendaciones de juegos.</p>
+        <form action="#" method="post">
+          <label for="nombre">Nombre:</label>
+          <input id="nombre" type="text" name="nombre" required minlength="3">
+
+          <label for="email">Correo electronico:</label>
+          <input id="email" type="email" name="email" required>
+
+          <button type="submit">Enviar</button>
+        </form>
       </article>
     </section>
   </main>
