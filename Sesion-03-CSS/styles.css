@@ -1,20 +1,116 @@
-/* TODO: Reset y estilos base */
+/* Reset y box model */
+* {
+  box-sizing: border-box;
+}
 
-/* TODO: Galería de productos */
+/* Estilos generales del body */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+  color: #333333;
+  line-height: 1.5;
+}
+
+/* Header */
+header {
+  background-color: #1a5276;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+/* Contenedor principal */
+main.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Sección de la galería */
+.galeria {
+  margin-bottom: 32px;
+}
+
+/* Tarjeta de producto — estilos base con box model */
+.producto {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 0 0 20px 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Imágenes del producto */
+.producto img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+/* Información del producto */
+.producto-info {
+  padding: 4px 0;
+}
+
+/* Nombre del producto */
+.producto h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222222;
+}
+
+/* Precio destacado */
+.precio {
+  margin: 0 0 12px 0;
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: #1a5276;
+}
+
+/* Botón Comprar — estilos básicos (sin efecto hover todavía) */
+.btn-comprar {
+  background-color: #2874a6;
+  color: #ffffff;
+  border: 1px solid #1a5276;
+  border-radius: 4px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Footer */
+footer {
+  background-color: #1a5276;
+  color: #ffffff;
+  text-align: center;
+  padding: 16px;
+  margin-top: 24px;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* TODO Día 3: Galería con CSS Grid */
 /* Desktop (>=1024px): 3 columnas usando CSS Grid */
 /* Mobile (<768px): 1 columna con scroll vertical */
 
-/* TODO: Estilo de cada tarjeta de producto */
-/* - Imagen ocupa el ancho completo de la tarjeta */
-/* - Nombre del producto en negrita */
-/* - Precio destacado */
-/* - Botón "Comprar" estilizado con hover effect */
-
-/* TODO: To-Do List */
+/* TODO Día 3: To-Do List */
 /* - Lista sin marcadores (list-style: none) */
 /* - Checkbox con label accesible */
 /* - Tareas alternadas con color de fondo (zebra striping) */
 
-/* TODO: Diseño responsivo */
-/* - Usar @media queries para cambiar entre mobile y desktop */
-/* - La galería debe ser responsiva usando Grid + media queries */
+/* TODO Día 4: efecto hover y transiciones en el botón Comprar */
