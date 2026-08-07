@@ -10,6 +10,7 @@ body {
   background-color: #f5f5f5;
   color: #333333;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -33,8 +34,11 @@ main.container {
   padding: 16px;
 }
 
-/* Sección de la galería */
+/* Sección de la galería — CSS Grid (escritorio: 3 columnas) */
 .galeria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
   margin-bottom: 32px;
 }
 
@@ -44,7 +48,7 @@ main.container {
   border: 1px solid #dddddd;
   border-radius: 8px;
   padding: 16px;
-  margin: 0 0 20px 0;
+  margin: 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
@@ -79,7 +83,7 @@ main.container {
   color: #1a5276;
 }
 
-/* Botón Comprar — estilos básicos (sin efecto hover todavía) */
+/* Botón Comprar — estilos básicos */
 .btn-comprar {
   background-color: #2874a6;
   color: #ffffff;
@@ -88,6 +92,67 @@ main.container {
   padding: 10px 18px;
   font-size: 1rem;
   cursor: pointer;
+}
+
+/* Cambio sencillo de color al pasar el mouse */
+.btn-comprar:hover {
+  background-color: #1a5276;
+}
+
+/* To-Do List */
+.todo-list {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.todo-list h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.3rem;
+  color: #1a5276;
+  text-align: center;
+}
+
+.tareas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tarea {
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+/* Zebra striping: filas pares con fondo alternado */
+.tarea:nth-child(even) {
+  background-color: #eaf2f8;
+}
+
+.tarea:nth-child(odd) {
+  background-color: #f8f9f9;
+}
+
+.tarea input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.tarea label {
+  cursor: pointer;
+}
+
+/* Móvil (<768px): 1 columna */
+@media (max-width: 767px) {
+  .galeria {
+    grid-template-columns: 1fr;
+  }
+
+  main.container {
+    padding: 12px;
+  }
 }
 
 /* Footer */
@@ -103,14 +168,3 @@ footer p {
   margin: 0;
   font-size: 0.9rem;
 }
-
-/* TODO Día 3: Galería con CSS Grid */
-/* Desktop (>=1024px): 3 columnas usando CSS Grid */
-/* Mobile (<768px): 1 columna con scroll vertical */
-
-/* TODO Día 3: To-Do List */
-/* - Lista sin marcadores (list-style: none) */
-/* - Checkbox con label accesible */
-/* - Tareas alternadas con color de fondo (zebra striping) */
-
-/* TODO Día 4: efecto hover y transiciones en el botón Comprar */
