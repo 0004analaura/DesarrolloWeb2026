@@ -1,9 +1,8 @@
-/* Reset y box model */
+/* Estilos generales */
 * {
   box-sizing: border-box;
 }
 
-/* Estilos generales del body */
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -34,7 +33,7 @@ main.container {
   padding: 16px;
 }
 
-/* Sección de la galería — CSS Grid (escritorio: 3 columnas) */
+/* Galería de productos — CSS Grid (escritorio: 3 columnas) */
 .galeria {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -83,7 +82,7 @@ main.container {
   color: #1a5276;
 }
 
-/* Botón Comprar — estilos básicos */
+/* Efectos de botones */
 .btn-comprar {
   background-color: #2874a6;
   color: #ffffff;
@@ -92,14 +91,20 @@ main.container {
   padding: 10px 18px;
   font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Cambio sencillo de color al pasar el mouse */
 .btn-comprar:hover {
   background-color: #1a5276;
 }
 
-/* To-Do List */
+/* Foco visible para navegación con teclado */
+.btn-comprar:focus-visible {
+  outline: 3px solid #f4d03f;
+  outline-offset: 2px;
+}
+
+/* Lista de tareas */
 .todo-list {
   background-color: #ffffff;
   border: 1px solid #dddddd;
@@ -142,9 +147,15 @@ main.container {
 
 .tarea label {
   cursor: pointer;
+  color: #333333;
 }
 
-/* Móvil (<768px): 1 columna */
+.tarea input[type="checkbox"]:focus-visible {
+  outline: 2px solid #2874a6;
+  outline-offset: 2px;
+}
+
+/* Diseño responsivo — móvil (<768px): 1 columna */
 @media (max-width: 767px) {
   .galeria {
     grid-template-columns: 1fr;
