@@ -34,9 +34,20 @@ export function generarId() {
  *   La tarea creada, o null si el texto es vacío.
  */
 export function agregarTarea(texto) {
-    // TODO: validar que `texto` no esté vacío (trim), crear el objeto
-    // { id, texto, completada: false }, hacer push al array `tareas`
-    // y devolverlo. Si el texto es vacío, devolver null.
+    const textoLimpio = texto.trim();
+
+    if (textoLimpio === "") {
+        return null;
+    }
+
+    const nuevaTarea = {
+        id: generarId(),
+        texto: textoLimpio,
+        completada: false
+    };
+
+    tareas.push(nuevaTarea);
+    return nuevaTarea;
 }
 
 /**
@@ -45,8 +56,14 @@ export function agregarTarea(texto) {
  * @returns {boolean}
  */
 export function eliminarTarea(id) {
-    // TODO: filtrar `tareas` para quitar la que tenga ese id.
-    // Devuelve true si eliminó al menos una, false si no.
+    const indice = tareas.findIndex((tarea) => tarea.id === id);
+
+    if (indice === -1) {
+        return false;
+    }
+
+    tareas.splice(indice, 1);
+    return true;
 }
 
 /**
@@ -100,9 +117,10 @@ export function render(filtro = "todas") {
     if (!lista) return;
 
     lista.innerHTML = "";
-    const visibles = filtrarTareas(filtro);
 
-    for (const tarea of visibles) {
+    // Día 2: se muestran todas las tareas.
+    // El parámetro filtro se usará en el Día 3 con filtrarTareas().
+    for (const tarea of tareas) {
         const li = document.createElement("li");
         if (tarea.completada) li.classList.add("completada");
 
@@ -111,11 +129,7 @@ export function render(filtro = "todas") {
         checkbox.checked = tarea.completada;
         checkbox.dataset.id = tarea.id;
         checkbox.setAttribute("aria-label", `Marcar "${tarea.texto}" como hecha`);
-        checkbox.addEventListener("change", () => {
-            toggleTarea(tarea.id);
-            guardar();
-            render(filtroActual);
-        });
+        // TODO Día 3: conectar toggleTarea al checkbox
 
         const span = document.createElement("span");
         span.className = "texto";
@@ -128,8 +142,7 @@ export function render(filtro = "todas") {
         btnEliminar.setAttribute("aria-label", `Eliminar "${tarea.texto}"`);
         btnEliminar.addEventListener("click", () => {
             eliminarTarea(tarea.id);
-            guardar();
-            render(filtroActual);
+            render();
         });
 
         li.append(checkbox, span, btnEliminar);
@@ -146,8 +159,8 @@ export function render(filtro = "todas") {
 let filtroActual = "todas";
 
 function init() {
-    cargar();
-    render(filtroActual);
+    // TODO Día 4: llamar a cargar() para leer localStorage
+    render();
 
     const form = document.getElementById("form-tarea");
     if (form) {
@@ -156,8 +169,7 @@ function init() {
             const input = document.getElementById("input-tarea");
             const creada = agregarTarea(input.value);
             if (creada) {
-                guardar();
-                render(filtroActual);
+                render();
                 input.value = "";
                 input.focus();
             }
