@@ -72,8 +72,14 @@ export function eliminarTarea(id) {
  * @returns {boolean}
  */
 export function toggleTarea(id) {
-    // TODO: recorrer `tareas` y cambiar `completada` de la que coincida.
-    // Devuelve true si la encontró.
+    const tareaEncontrada = tareas.find((tarea) => tarea.id === id);
+
+    if (!tareaEncontrada) {
+        return false;
+    }
+
+    tareaEncontrada.completada = !tareaEncontrada.completada;
+    return true;
 }
 
 /**
@@ -82,7 +88,16 @@ export function toggleTarea(id) {
  * @returns {Array}
  */
 export function filtrarTareas(filtro) {
-    // TODO: implementar la lógica de filtrado.
+    if (filtro === "pendientes") {
+        return tareas.filter((tarea) => tarea.completada === false);
+    }
+
+    if (filtro === "completadas") {
+        return tareas.filter((tarea) => tarea.completada === true);
+    }
+
+    // "todas" u otro valor: devolver todas las tareas
+    return tareas;
 }
 
 /**
@@ -117,10 +132,9 @@ export function render(filtro = "todas") {
     if (!lista) return;
 
     lista.innerHTML = "";
+    const visibles = filtrarTareas(filtro);
 
-    // Día 2: se muestran todas las tareas.
-    // El parámetro filtro se usará en el Día 3 con filtrarTareas().
-    for (const tarea of tareas) {
+    for (const tarea of visibles) {
         const li = document.createElement("li");
         if (tarea.completada) li.classList.add("completada");
 
@@ -129,7 +143,10 @@ export function render(filtro = "todas") {
         checkbox.checked = tarea.completada;
         checkbox.dataset.id = tarea.id;
         checkbox.setAttribute("aria-label", `Marcar "${tarea.texto}" como hecha`);
-        // TODO Día 3: conectar toggleTarea al checkbox
+        checkbox.addEventListener("change", () => {
+            toggleTarea(tarea.id);
+            render(filtroActual);
+        });
 
         const span = document.createElement("span");
         span.className = "texto";
@@ -142,7 +159,7 @@ export function render(filtro = "todas") {
         btnEliminar.setAttribute("aria-label", `Eliminar "${tarea.texto}"`);
         btnEliminar.addEventListener("click", () => {
             eliminarTarea(tarea.id);
-            render();
+            render(filtroActual);
         });
 
         li.append(checkbox, span, btnEliminar);
@@ -160,7 +177,7 @@ let filtroActual = "todas";
 
 function init() {
     // TODO Día 4: llamar a cargar() para leer localStorage
-    render();
+    render(filtroActual);
 
     const form = document.getElementById("form-tarea");
     if (form) {
@@ -169,7 +186,7 @@ function init() {
             const input = document.getElementById("input-tarea");
             const creada = agregarTarea(input.value);
             if (creada) {
-                render();
+                render(filtroActual);
                 input.value = "";
                 input.focus();
             }
