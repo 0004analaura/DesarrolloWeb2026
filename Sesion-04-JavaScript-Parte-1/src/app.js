@@ -104,17 +104,30 @@ export function filtrarTareas(filtro) {
  * Persiste el array `tareas` en localStorage como JSON.
  */
 export function guardar() {
-    // TODO: usar localStorage.setItem con la clave STORAGE_KEY.
-    // El valor debe ser JSON.stringify(tareas).
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tareas));
 }
 
 /**
  * Carga las tareas desde localStorage. Si no hay nada, deja el array vacío.
  */
 export function cargar() {
-    // TODO: leer localStorage con STORAGE_KEY.
-    // Si existe, hacer JSON.parse y asignarlo a `tareas`.
-    // Si no existe o falla, `tareas` se queda como [].
+    const datosGuardados = localStorage.getItem(STORAGE_KEY);
+
+    if (!datosGuardados) {
+        tareas = [];
+        return;
+    }
+
+    try {
+        const tareasGuardadas = JSON.parse(datosGuardados);
+        if (Array.isArray(tareasGuardadas)) {
+            tareas = tareasGuardadas;
+        } else {
+            tareas = [];
+        }
+    } catch {
+        tareas = [];
+    }
 }
 
 // =====================================================
@@ -145,6 +158,7 @@ export function render(filtro = "todas") {
         checkbox.setAttribute("aria-label", `Marcar "${tarea.texto}" como hecha`);
         checkbox.addEventListener("change", () => {
             toggleTarea(tarea.id);
+            guardar();
             render(filtroActual);
         });
 
@@ -159,6 +173,7 @@ export function render(filtro = "todas") {
         btnEliminar.setAttribute("aria-label", `Eliminar "${tarea.texto}"`);
         btnEliminar.addEventListener("click", () => {
             eliminarTarea(tarea.id);
+            guardar();
             render(filtroActual);
         });
 
@@ -176,7 +191,7 @@ export function render(filtro = "todas") {
 let filtroActual = "todas";
 
 function init() {
-    // TODO Día 4: llamar a cargar() para leer localStorage
+    cargar();
     render(filtroActual);
 
     const form = document.getElementById("form-tarea");
@@ -186,6 +201,7 @@ function init() {
             const input = document.getElementById("input-tarea");
             const creada = agregarTarea(input.value);
             if (creada) {
+                guardar();
                 render(filtroActual);
                 input.value = "";
                 input.focus();
