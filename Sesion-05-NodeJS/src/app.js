@@ -115,7 +115,18 @@ export function infoSistema() {
  * @returns {{ registrar: (mensaje: string) => void, onRegistro: (fn: (linea: string) => void) => void }}
  */
 export function crearLogger() {
-    throw new Error('Not implemented: crearLogger');
+    const emisor = new EventEmitter();
+
+    function registrar(mensaje) {
+        const linea = `[${new Date().toISOString()}] ${mensaje}`;
+        emisor.emit('registro', linea);
+    }
+
+    function onRegistro(fn) {
+        emisor.on('registro', fn);
+    }
+
+    return { registrar, onRegistro };
 }
 
 /**
@@ -126,7 +137,18 @@ export function crearLogger() {
  * @returns {Promise<Array<{id: string, texto: string, fecha: string}>>}
  */
 export async function leerMensajes(archivoDatos) {
-    throw new Error('Not implemented: leerMensajes');
+    try {
+        const contenido = await fs.readFile(archivoDatos, 'utf-8');
+        const datos = JSON.parse(contenido);
+
+        if (Array.isArray(datos)) {
+            return datos;
+        }
+
+        return [];
+    } catch {
+        return [];
+    }
 }
 
 /**
@@ -139,7 +161,30 @@ export async function leerMensajes(archivoDatos) {
  * @returns {Promise<{id: string, texto: string, fecha: string} | null>}
  */
 export async function agregarMensaje(archivoDatos, texto) {
-    throw new Error('Not implemented: agregarMensaje');
+    if (!texto || !texto.trim()) {
+        return null;
+    }
+
+    const mensajes = await leerMensajes(archivoDatos);
+
+    const nuevoMensaje = {
+        id: generarId(),
+        texto: texto.trim(),
+        fecha: new Date().toISOString()
+    };
+
+    mensajes.push(nuevoMensaje);
+
+    const directorio = path.dirname(archivoDatos);
+    await fs.mkdir(directorio, { recursive: true });
+
+    await fs.writeFile(
+        archivoDatos,
+        JSON.stringify(mensajes, null, 2),
+        'utf-8'
+    );
+
+    return nuevoMensaje;
 }
 
 /**
