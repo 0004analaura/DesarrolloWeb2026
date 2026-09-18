@@ -1,49 +1,108 @@
 /* ============================================================
-   styles.css — Plantilla básica
+   styles.css — Estilos del sitio CRUD de Alumnos
    Tarea Sesión 7 · Desarrollo Web · UMG
-   TODO: mejora estos estilos (puedes cambiar todo el diseño).
    ============================================================ */
 
 :root {
     --color-primario: #4a148c;
+    --color-primario-oscuro: #380e6b;
     --color-fondo: #f5f5f7;
     --color-texto: #1f2937;
+    --color-borde: #e5e7eb;
     --color-error: #c62828;
     --color-ok: #2e7d32;
+    --color-editar: #1565c0;
+    --color-eliminar: #c62828;
+    --sombra: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
+    min-height: 100vh;
     font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-    background: var(--color-fondo);
+    background:
+        radial-gradient(circle at top right, rgba(74, 20, 140, 0.08), transparent 40%),
+        var(--color-fondo);
     color: var(--color-texto);
 }
 
 header {
-    background: var(--color-primario);
+    background: linear-gradient(135deg, var(--color-primario), var(--color-primario-oscuro));
     color: white;
-    padding: 16px 24px;
+    padding: 20px 24px;
+    box-shadow: var(--sombra);
 }
 
-header h1 { margin: 0 0 4px 0; }
-header p { margin: 0; opacity: 0.85; font-size: 14px; }
+header h1 {
+    margin: 0 0 4px 0;
+    font-size: 1.6rem;
+}
 
-main { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+main {
+    max-width: 960px;
+    margin: 28px auto;
+    padding: 0 16px 40px;
+    overflow-x: auto;
+}
+
+#btnNuevo {
+    background: var(--color-primario);
+    color: white;
+    font-weight: 600;
+}
+
+#btnNuevo:hover {
+    background: var(--color-primario-oscuro);
+}
 
 table {
     width: 100%;
     border-collapse: collapse;
     background: white;
     margin-top: 16px;
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
+    box-shadow: var(--sombra);
 }
 
-th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
-th { background: #ede7f6; }
-tbody tr:hover { background: #f9fafb; }
+th,
+td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-borde);
+    vertical-align: middle;
+}
+
+th {
+    background: #ede7f6;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+tbody tr:hover {
+    background: #faf7ff;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.celdas-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
 
 button {
     cursor: pointer;
@@ -51,25 +110,149 @@ button {
     border-radius: 6px;
     padding: 8px 14px;
     font-size: 14px;
+    transition: background-color 0.15s ease, transform 0.1s ease;
 }
 
-#btnNuevo { background: var(--color-primario); color: white; }
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:focus-visible {
+    outline: 2px solid var(--color-primario);
+    outline-offset: 2px;
+}
+
+.btn-editar {
+    background: #e3f2fd;
+    color: var(--color-editar);
+}
+
+.btn-editar:hover {
+    background: #bbdefb;
+}
+
+.btn-eliminar,
+#btnConfirmarEliminar {
+    background: #ffebee;
+    color: var(--color-eliminar);
+}
+
+.btn-eliminar:hover,
+#btnConfirmarEliminar:hover {
+    background: #ffcdd2;
+}
+
+#btnCancelar,
+#btnCancelarEliminar {
+    background: #eef2f7;
+    color: var(--color-texto);
+}
+
+#btnCancelar:hover,
+#btnCancelarEliminar:hover {
+    background: #dde3ea;
+}
+
+#btnGuardar {
+    background: var(--color-primario);
+    color: white;
+    font-weight: 600;
+}
+
+#btnGuardar:hover {
+    background: var(--color-primario-oscuro);
+}
 
 dialog {
     border: none;
-    border-radius: 10px;
-    padding: 20px 24px;
-    min-width: 340px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 22px 24px;
+    width: min(90vw, 450px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
 }
 
-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+dialog::backdrop {
+    background: rgba(15, 23, 42, 0.5);
+}
 
-label { display: block; margin-top: 10px; font-size: 14px; font-weight: 600; }
-input { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #cbd5e1; border-radius: 6px; }
+dialog h2 {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+}
 
-.acciones { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+label {
+    display: block;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
 
-#mensaje { min-height: 20px; font-size: 14px; }
-#mensaje.error { color: var(--color-error); }
-#mensaje.ok { color: var(--color-ok); }
+input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 4px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+    background: white;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px rgba(74, 20, 140, 0.15);
+}
+
+.acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+#mensaje {
+    min-height: 22px;
+    margin: 14px 0 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#mensaje.error {
+    color: var(--color-error);
+}
+
+#mensaje.ok {
+    color: var(--color-ok);
+}
+
+@media (max-width: 700px) {
+    header {
+        padding: 16px;
+    }
+
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    main {
+        margin-top: 20px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .celdas-acciones {
+        flex-direction: column;
+    }
+
+    .acciones {
+        flex-direction: column-reverse;
+    }
+
+    .acciones button {
+        width: 100%;
+    }
+}
